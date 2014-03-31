@@ -2,7 +2,11 @@ package view;
 
 import java.lang.reflect.InvocationTargetException;
 
+import metrics.DSC;
 import metrics.LCOM;
+import metrics.LCOM2;
+import metrics.NOM;
+import metrics.NOP;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -108,7 +112,15 @@ public class MetricsAction  implements IObjectActionDelegate {
 						}
 						SystemObject system = ASTReader.getSystemObject();
 						LCOM lcom = new LCOM(system);
-						System.out.print(lcom.toString());
+						LCOM2 lcom2 = new LCOM2(system);
+						DSC dsc1 = new DSC(system);
+						NOM nom1 = new NOM(system);
+						NOP nop1 = new NOP(system);
+						System.out.println(nop1);
+						//System.out.println(nom1);
+						//System.out.println(dsc1);
+						//System.out.println(lcom2.toString());
+						//System.out.print(lcom.toString());
 						
 						if(selectedPackageFragmentRoot != null) {
 							// package fragment root selected
