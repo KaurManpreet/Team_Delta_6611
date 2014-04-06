@@ -19,7 +19,7 @@ public class WOC {
 		for (ClassObject classObject : classes) {
 			double wocNbr = computeWOC(classObject, classes);
 			if (wocNbr != -1) {
-				woc.put(classObject.getName(), wocNbr);
+				wocMap.put(classObject.getName(), wocNbr);
 			}
 		}
 	}
