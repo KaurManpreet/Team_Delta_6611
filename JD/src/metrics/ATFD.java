@@ -3,6 +3,7 @@ package metrics;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.jdt.core.dom.VariableDeclaration;
@@ -16,15 +17,16 @@ import ast.TypeObject;
 
 public class ATFD {
 	private int atfdcounter;
+	private Map<String, Integer> atfdMap;
 
 	public ATFD(SystemObject system) {
 		atfdcounter = 0;
+		atfdMap = new HashMap<String, Integer>();
 		Set<ClassObject> classes = system.getClassObjects();
 		for (ClassObject classObject : classes) {
 			int aftdNbr = computeAtfd(classObject, classes);
 			if (aftdNbr != -1) {
-				System.out.println("AFTD number for " + classObject.getName()
-						+ " is " + aftdNbr);
+				atfdMap.put(classObject.getName(), aftdNbr);
 			}
 		}
 	}
@@ -56,5 +58,14 @@ public class ATFD {
 		classesAccessed.clear();
 
 		return i;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (String key : atfdMap.keySet()) {
+			sb.append(key).append("\t").append(atfdMap.get(key)).append("\n");
+		}
+		return sb.toString();
 	}
 }

@@ -1,6 +1,8 @@
 package metrics;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import ast.ClassObject;
@@ -9,13 +11,15 @@ import ast.MethodObject;
 import ast.SystemObject;
 
 public class WOC {
+	private Map<String, Double> wocMap;
+
 	public WOC(SystemObject system) {
 		Set<ClassObject> classes = system.getClassObjects();
+		wocMap = new HashMap<String, Double>();
 		for (ClassObject classObject : classes) {
-			double woc = computeWOC(classObject, classes);
-			if (woc != -1) {
-				System.out.println("WOC metric number for "
-						+ classObject.getName() + " is " + woc);
+			double wocNbr = computeWOC(classObject, classes);
+			if (wocNbr != -1) {
+				woc.put(classObject.getName(), wocNbr);
 			}
 		}
 	}
@@ -43,6 +47,14 @@ public class WOC {
 
 		double woc = nbrOfNonAccesorMethod / nom;
 		return woc;
+	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (String key : wocMap.keySet()) {
+			sb.append(key).append("\t").append(wocMap.get(key)).append("\n");
+		}
+		return sb.toString();
 	}
 }
