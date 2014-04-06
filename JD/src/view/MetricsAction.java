@@ -5,8 +5,11 @@ import java.lang.reflect.InvocationTargetException;
 import metrics.DSC;
 import metrics.LCOM;
 import metrics.LCOM2;
+import metrics.NOA;
 import metrics.NOM;
 import metrics.NOP;
+import metrics.TCC;
+import metrics.WMC;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
@@ -111,12 +114,19 @@ public class MetricsAction  implements IObjectActionDelegate {
 							new ASTReader(selectedProject, monitor);
 						}
 						SystemObject system = ASTReader.getSystemObject();
-						LCOM lcom = new LCOM(system);
+						/*LCOM lcom = new LCOM(system);
 						LCOM2 lcom2 = new LCOM2(system);
 						DSC dsc1 = new DSC(system);
 						NOM nom1 = new NOM(system);
-						NOP nop1 = new NOP(system);
-						System.out.println(nop1);
+						NOP nop1 = new NOP(system);*/
+						//WMC wmc1 = new WMC(system);
+						//TCC tcc1 = new TCC(system);
+						NOA noa1 = new NOA(system);
+						
+						System.out.println(noa1.toString());
+						//System.out.println(tcc1.toString());
+						//System.out.print(wmc1.toString());
+						//System.out.println(nop1);
 						//System.out.println(nom1);
 						//System.out.println(dsc1);
 						//System.out.println(lcom2.toString());

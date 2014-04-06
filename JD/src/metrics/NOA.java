@@ -1,38 +1,39 @@
 package metrics;
 
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import ast.ClassObject;
+import ast.FieldInstructionObject;
 import ast.FieldObject;
 import ast.MethodObject;
 import ast.SystemObject;
 
-public class NOM {
-	
+public class NOA {
+
 	private Map<String, Integer> classesMap;
 
-	public NOM(SystemObject system) {
+	public NOA(SystemObject system) {
 		classesMap = new HashMap<String, Integer>();
 		
 		Set<ClassObject> classes = system.getClassObjects();
 		
 		for(ClassObject classObject : classes) {
-			int methods = computeMethods(classObject);
-			if(methods != -1) {
-				classesMap.put(classObject.getName(), methods);
+			int attributes = computeAttributes(classObject);
+			if(attributes != -1) {
+				classesMap.put(classObject.getName(), attributes);
 			}
 		}
 		
 	}
 	
-	private int computeMethods(ClassObject classObject) {
+	private int computeAttributes(ClassObject classObject) {
 		
-		List<MethodObject> methods = classObject.getMethodList();
-		return (methods.size());
+		List<FieldObject> attributes = classObject.getFieldList();
+		return (attributes.size());
 		
 	}
 	
