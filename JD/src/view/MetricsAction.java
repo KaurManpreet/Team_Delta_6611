@@ -2,12 +2,10 @@ package view;
 
 import java.lang.reflect.InvocationTargetException;
 
-import metrics.DSC;
 import metrics.LCOM;
 import metrics.LCOM2;
 import metrics.NOA;
 import metrics.NOM;
-import metrics.NOP;
 import metrics.TCC;
 import metrics.WMC;
 
