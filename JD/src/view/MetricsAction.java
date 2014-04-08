@@ -2,13 +2,7 @@ package view;
 
 import java.lang.reflect.InvocationTargetException;
 
-import metrics.LCOM;
-import metrics.LCOM2;
-import metrics.NOA;
-import metrics.NOM;
-import metrics.TCC;
-import metrics.WMC;
-
+import metrics.ATFD;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
@@ -30,70 +24,65 @@ import ast.ASTReader;
 import ast.CompilationUnitCache;
 import ast.SystemObject;
 
-public class MetricsAction  implements IObjectActionDelegate {
-	
+public class MetricsAction implements IObjectActionDelegate {
+
 	private IWorkbenchPart part;
 	private ISelection selection;
-	
+
 	private IJavaProject selectedProject;
 	private IPackageFragmentRoot selectedPackageFragmentRoot;
 	private IPackageFragment selectedPackageFragment;
 	private ICompilationUnit selectedCompilationUnit;
 	private IType selectedType;
 	private IMethod selectedMethod;
-	
+
 	public void run(IAction arg0) {
 		try {
 			CompilationUnitCache.getInstance().clearCache();
-			if(selection instanceof IStructuredSelection) {
-				IStructuredSelection structuredSelection = (IStructuredSelection)selection;
+			if (selection instanceof IStructuredSelection) {
+				IStructuredSelection structuredSelection = (IStructuredSelection) selection;
 				Object element = structuredSelection.getFirstElement();
-				if(element instanceof IJavaProject) {
-					selectedProject = (IJavaProject)element;
+				if (element instanceof IJavaProject) {
+					selectedProject = (IJavaProject) element;
 					selectedPackageFragmentRoot = null;
 					selectedPackageFragment = null;
 					selectedCompilationUnit = null;
 					selectedType = null;
 					selectedMethod = null;
-				}
-				else if(element instanceof IPackageFragmentRoot) {
-					IPackageFragmentRoot packageFragmentRoot = (IPackageFragmentRoot)element;
+				} else if (element instanceof IPackageFragmentRoot) {
+					IPackageFragmentRoot packageFragmentRoot = (IPackageFragmentRoot) element;
 					selectedProject = packageFragmentRoot.getJavaProject();
 					selectedPackageFragmentRoot = packageFragmentRoot;
 					selectedPackageFragment = null;
 					selectedCompilationUnit = null;
 					selectedType = null;
 					selectedMethod = null;
-				}
-				else if(element instanceof IPackageFragment) {
-					IPackageFragment packageFragment = (IPackageFragment)element;
+				} else if (element instanceof IPackageFragment) {
+					IPackageFragment packageFragment = (IPackageFragment) element;
 					selectedProject = packageFragment.getJavaProject();
 					selectedPackageFragment = packageFragment;
 					selectedPackageFragmentRoot = null;
 					selectedCompilationUnit = null;
 					selectedType = null;
 					selectedMethod = null;
-				}
-				else if(element instanceof ICompilationUnit) {
-					ICompilationUnit compilationUnit = (ICompilationUnit)element;
+				} else if (element instanceof ICompilationUnit) {
+					ICompilationUnit compilationUnit = (ICompilationUnit) element;
 					selectedProject = compilationUnit.getJavaProject();
 					selectedCompilationUnit = compilationUnit;
 					selectedPackageFragmentRoot = null;
 					selectedPackageFragment = null;
 					selectedType = null;
 					selectedMethod = null;
-				}
-				else if(element instanceof IType) {
-					IType type = (IType)element;
+				} else if (element instanceof IType) {
+					IType type = (IType) element;
 					selectedProject = type.getJavaProject();
 					selectedType = type;
 					selectedPackageFragmentRoot = null;
 					selectedPackageFragment = null;
 					selectedCompilationUnit = null;
 					selectedMethod = null;
-				}
-				else if(element instanceof IMethod) {
-					IMethod method = (IMethod)element;
+				} else if (element instanceof IMethod) {
+					IMethod method = (IMethod) element;
 					selectedProject = method.getJavaProject();
 					selectedMethod = method;
 					selectedPackageFragmentRoot = null;
@@ -104,48 +93,47 @@ public class MetricsAction  implements IObjectActionDelegate {
 				IWorkbench wb = PlatformUI.getWorkbench();
 				IProgressService ps = wb.getProgressService();
 				ps.busyCursorWhile(new IRunnableWithProgress() {
-					public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-						if(ASTReader.getSystemObject() != null && selectedProject.equals(ASTReader.getExaminedProject())) {
-							new ASTReader(selectedProject, ASTReader.getSystemObject(), monitor);
-						}
-						else {
+					public void run(IProgressMonitor monitor)
+							throws InvocationTargetException,
+							InterruptedException {
+						if (ASTReader.getSystemObject() != null
+								&& selectedProject.equals(ASTReader
+										.getExaminedProject())) {
+							new ASTReader(selectedProject, ASTReader
+									.getSystemObject(), monitor);
+						} else {
 							new ASTReader(selectedProject, monitor);
 						}
 						SystemObject system = ASTReader.getSystemObject();
-						/*LCOM lcom = new LCOM(system);
-						LCOM2 lcom2 = new LCOM2(system);
-						DSC dsc1 = new DSC(system);
-						NOM nom1 = new NOM(system);
-						NOP nop1 = new NOP(system);*/
-						//WMC wmc1 = new WMC(system);
-						//TCC tcc1 = new TCC(system);
-						NOA noa1 = new NOA(system);
-						
-						System.out.println(noa1.toString());
-						//System.out.println(tcc1.toString());
-						//System.out.print(wmc1.toString());
-						//System.out.println(nop1);
-						//System.out.println(nom1);
-						//System.out.println(dsc1);
-						//System.out.println(lcom2.toString());
-						//System.out.print(lcom.toString());
-						
-						if(selectedPackageFragmentRoot != null) {
+						/*
+						 * LCOM lcom = new LCOM(system); LCOM2 lcom2 = new
+						 * LCOM2(system); DSC dsc1 = new DSC(system); NOM nom1 =
+						 * new NOM(system); NOP nop1 = new NOP(system);
+						 */
+						// WMC wmc1 = new WMC(system);
+						// TCC tcc1 = new TCC(system);
+						ATFD atfd = new ATFD(system);
+
+						System.out.println(atfd.toString());
+						// System.out.println(tcc1.toString());
+						// System.out.print(wmc1.toString());
+						// System.out.println(nop1);
+						// System.out.println(nom1);
+						// System.out.println(dsc1);
+						// System.out.println(lcom2.toString());
+						// System.out.print(lcom.toString());
+
+						if (selectedPackageFragmentRoot != null) {
 							// package fragment root selected
-						}
-						else if(selectedPackageFragment != null) {
+						} else if (selectedPackageFragment != null) {
 							// package fragment selected
-						}
-						else if(selectedCompilationUnit != null) {
+						} else if (selectedCompilationUnit != null) {
 							// compilation unit selected
-						}
-						else if(selectedType != null) {
+						} else if (selectedType != null) {
 							// type selected
-						}
-						else if(selectedMethod != null) {
+						} else if (selectedMethod != null) {
 							// method selected
-						}
-						else {
+						} else {
 							// java project selected
 						}
 					}
