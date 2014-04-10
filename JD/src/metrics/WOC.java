@@ -26,7 +26,7 @@ public class WOC {
 
 	private double computeWOC(ClassObject classObject, Set<ClassObject> classes) {
 		List<MethodObject> methods = classObject.getMethodList();
-		int nom = methods.size();
+		double nom = methods.size();
 		int getterCount = 0;
 		int setterCount = 0;
 		for (int i = 0; i < methods.size(); i++) {
@@ -41,7 +41,7 @@ public class WOC {
 			}
 
 		}
-		int nbrOfNonAccesorMethod = nom - (getterCount + setterCount);
+		double nbrOfNonAccesorMethod = nom - (getterCount + setterCount);
 		double wocNbr = 0;
 		if (nom != 0) {
 			wocNbr = nbrOfNonAccesorMethod / nom;

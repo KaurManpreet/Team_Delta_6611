@@ -1,5 +1,6 @@
 package metrics;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +13,7 @@ public class NOPA {
 	private Map<String, Double> classesMap;
 
 	public NOPA(SystemObject system) {
+		classesMap = new HashMap<String, Double>();
 		Set<ClassObject> classes = system.getClassObjects();
 		for (ClassObject classObject : classes) {
 			double NumOfAPublicAttributes = computeNOPA(classObject);
@@ -19,7 +21,6 @@ public class NOPA {
 				classesMap.put(classObject.getName(), NumOfAPublicAttributes);
 			}
 		}
-
 	}
 
 	private double computeNOPA(ClassObject classObject) {

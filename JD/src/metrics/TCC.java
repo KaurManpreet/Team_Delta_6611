@@ -24,9 +24,7 @@ public class TCC {
 
 		for (ClassObject classObject : classes) {
 			double cohesion = computeCohesion(classObject, system);
-			if (cohesion != -1) {
-				cohesionMap.put(classObject.getName(), cohesion);
-			}
+			cohesionMap.put(classObject.getName(), cohesion);
 		}
 
 	}
@@ -41,27 +39,46 @@ public class TCC {
 		if (methods.size() < 2) {
 			return -1;
 		}
-
+		List<FieldInstructionObject> attributesI1 = new ArrayList<FieldInstructionObject>();
+		List<FieldInstructionObject> attributesJ1 = new ArrayList<FieldInstructionObject>();
 		for (int i = 0; i < methods.size() - 1; i++) {
 			MethodObject mI = methods.get(i);
+			if (mI != null) {
+				attributesI1 = mI.getFieldInstructions();
+				Set<FieldInstructionObject> setI = new HashSet<FieldInstructionObject>(
+						attributesI1);
+				setI.addAll(getRemoteFieldInstructions(mI, system));
+				// attributesI.addAll(getRemoteFieldInstructions(mI,system));
+				List<FieldInstructionObject> attributesI = new ArrayList<FieldInstructionObject>(
+						setI);
 
-			List<FieldInstructionObject> attributesI = mI
-					.getFieldInstructions();
-			attributesI.addAll(getRemoteFieldInstructions(mI, system));
+				for (int j = i + 1; j < methods.size(); j++) {
+					MethodObject mJ = methods.get(j);
+					if (mJ != null) {
 
-			for (int j = i + 1; j < methods.size(); j++) {
-				MethodObject mJ = methods.get(j);
-				List<FieldInstructionObject> attributesJ = mJ
-						.getFieldInstructions();
-				attributesJ.addAll(getRemoteFieldInstructions(mJ, system));
-				Set<FieldInstructionObject> intersection = commonAttributes(
-						attributesI, attributesJ, classObject.getName());
-				if (!intersection.isEmpty()) {
-					p++;
+						attributesJ1 = mJ.getFieldInstructions();
+						Set<FieldInstructionObject> setJ = new HashSet<FieldInstructionObject>(
+								attributesJ1);
+						setJ.addAll(getRemoteFieldInstructions(mJ, system));
+						List<FieldInstructionObject> attributesJ = new ArrayList<FieldInstructionObject>(
+								setJ);
+
+						Set<FieldInstructionObject> intersection = commonAttributes(
+								attributesI, attributesJ, classObject.getName());
+						if (!intersection.isEmpty()) {
+							p++;
+						}
+						// attributesJ.clear();
+					}
 				}
+				// attributesI.clear();
 			}
 		}
-		return (p / q);
+		double tcc = 0;
+		if (q != 0) {
+			tcc = (p / q);
+		}
+		return tcc;
 	}
 
 	private Set<FieldInstructionObject> commonAttributes(
@@ -85,14 +102,18 @@ public class TCC {
 
 	private static List<FieldInstructionObject> getRemoteFieldInstructions(
 			MethodObject mI, SystemObject s1) {
-		List<FieldInstructionObject> attributesNew = new ArrayList<FieldInstructionObject>();
+		Set<FieldInstructionObject> attributesNew = new HashSet<FieldInstructionObject>();
 		Set<MethodInvocationObject> methodsI = mI
 				.getInvokedMethodsThroughThisReference();
 		Iterator<MethodInvocationObject> i1 = methodsI.iterator();
 		while (i1.hasNext()) {
 			MethodObject newM = s1.getMethod(i1.next());
-			attributesNew.addAll(newM.getFieldInstructions());
+			if (newM != null) {
+				attributesNew.addAll(newM.getFieldInstructions());
+			}
 		}
-		return attributesNew;
+		List<FieldInstructionObject> attributesList = new ArrayList<FieldInstructionObject>(
+				attributesNew);
+		return attributesList;
 	}
 }
