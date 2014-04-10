@@ -10,6 +10,8 @@ import metrics.ATFD;
 import metrics.NOA;
 import metrics.NOAM;
 import metrics.NOM;
+import metrics.NOPA;
+import metrics.TCC;
 import metrics.WMC;
 import metrics.WOC;
 
@@ -153,6 +155,18 @@ public class MetricsAction implements IObjectActionDelegate {
 						WOC woc = new WOC(system);
 						try {
 							writeXLSFile(woc.resultSet(), "woc");
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						NOPA nopa = new NOPA(system);
+						try {
+							writeXLSFile(nopa.resultSet(), "nopa");
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						TCC tcc = new TCC(system);
+						try {
+							writeXLSFile(tcc.resultSet(), "tcc");
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
