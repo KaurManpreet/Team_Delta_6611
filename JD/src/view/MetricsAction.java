@@ -1,8 +1,17 @@
 package view;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
+import java.util.Set;
 
 import metrics.ATFD;
+
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.core.ICompilationUnit;
 import org.eclipse.jdt.core.IJavaProject;
@@ -105,24 +114,12 @@ public class MetricsAction implements IObjectActionDelegate {
 							new ASTReader(selectedProject, monitor);
 						}
 						SystemObject system = ASTReader.getSystemObject();
-						/*
-						 * LCOM lcom = new LCOM(system); LCOM2 lcom2 = new
-						 * LCOM2(system); DSC dsc1 = new DSC(system); NOM nom1 =
-						 * new NOM(system); NOP nop1 = new NOP(system);
-						 */
-						// WMC wmc1 = new WMC(system);
-						// TCC tcc1 = new TCC(system);
 						ATFD atfd = new ATFD(system);
-
-						System.out.println(atfd.toString());
-						// System.out.println(tcc1.toString());
-						// System.out.print(wmc1.toString());
-						// System.out.println(nop1);
-						// System.out.println(nom1);
-						// System.out.println(dsc1);
-						// System.out.println(lcom2.toString());
-						// System.out.print(lcom.toString());
-
+						try {
+							writeXLSFile(atfd.resultSet());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 						if (selectedPackageFragmentRoot != null) {
 							// package fragment root selected
 						} else if (selectedPackageFragment != null) {
@@ -152,5 +149,44 @@ public class MetricsAction implements IObjectActionDelegate {
 
 	public void setActivePart(IAction action, IWorkbenchPart targetPart) {
 		this.part = targetPart;
+	}
+
+	public void writeXLSFile(Map<String, Integer> data) throws IOException {
+
+		String excelFileName = "D:/Temp/Test.xls";// name of excel file
+
+		String sheetName = "Sheet1";// name of sheet
+
+		HSSFWorkbook wb = new HSSFWorkbook();
+		HSSFSheet sheet = wb.createSheet(sheetName);
+		// Create a new row in current sheet
+		Row row = sheet.createRow(0);
+
+		// Create a new cell in current row
+		Cell cell = row.createCell(0);
+
+		// Set value to new value
+		cell.setCellValue("");
+		// iterating r number of rows
+		Set<String> keyset = data.keySet();
+		int rownum = 0;
+		for (String key : keyset) {
+
+			Row row1 = sheet.createRow(rownum++);
+
+			Integer metricValue = data.get(key);
+			Cell className = row1.createCell(0);
+			className.setCellValue(key);
+			int cellnum = 1;
+			Cell cell1 = row1.createCell(cellnum);
+			cell1.setCellValue(metricValue);
+		}
+
+		FileOutputStream fileOut = new FileOutputStream(excelFileName);
+
+		// write this workbook to an Outputstream.
+		wb.write(fileOut);
+		fileOut.flush();
+		fileOut.close();
 	}
 }

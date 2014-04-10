@@ -11,3 +11,11 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui.workbench
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ClassPath: poi-3.10-FINAL-20140208.jar,
+ poi-3.9.jar,
+ poi-examples-3.10-FINAL-20140208.jar,
+ poi-excelant-3.10-FINAL-20140208.jar,
+ poi-ooxml-3.10-FINAL-20140208.jar,
+ poi-ooxml-schemas-3.10-FINAL-20140208.jar,
+ poi-scratchpad-3.10-FINAL-20140208.jar,
+ .

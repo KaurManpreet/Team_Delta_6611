@@ -60,12 +60,8 @@ public class ATFD {
 		return i;
 	}
 
-	@Override
-	public String toString() {
+	public Map<String, Integer> resultSet() {
 		StringBuilder sb = new StringBuilder();
-		for (String key : atfdMap.keySet()) {
-			sb.append(key).append("\t").append(atfdMap.get(key)).append("\n");
-		}
-		return sb.toString();
+		return atfdMap;
 	}
 }
