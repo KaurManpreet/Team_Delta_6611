@@ -11,15 +11,15 @@ import ast.MethodObject;
 import ast.SystemObject;
 
 public class NOAM {
-	private Map<String, Double> NOAMMap;
+	private Map<String, Double> noamMap;
 
 	public NOAM(SystemObject system) {
 		Set<ClassObject> classes = system.getClassObjects();
-		NOAMMap = new HashMap<String, Double>();
+		noamMap = new HashMap<String, Double>();
 		for (ClassObject classObject : classes) {
 			double NOAMNbr = computeNOAM(classObject, classes);
 			if (NOAMNbr != -1) {
-				NOAMMap.put(classObject.getName(), NOAMNbr);
+				noamMap.put(classObject.getName(), NOAMNbr);
 			}
 		}
 	}
@@ -42,12 +42,8 @@ public class NOAM {
 		return (getterCount + setterCount);
 	}
 
-	@Override
-	public String toString() {
+	public Map<String, Double> resultSet() {
 		StringBuilder sb = new StringBuilder();
-		for (String key : NOAMMap.keySet()) {
-			sb.append(key).append("\t").append(NOAMMap.get(key)).append("\n");
-		}
-		return sb.toString();
+		return noamMap;
 	}
 }

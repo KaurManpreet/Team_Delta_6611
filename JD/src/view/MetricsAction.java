@@ -7,6 +7,11 @@ import java.util.Map;
 import java.util.Set;
 
 import metrics.ATFD;
+import metrics.NOA;
+import metrics.NOAM;
+import metrics.NOM;
+import metrics.WMC;
+import metrics.WOC;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -116,7 +121,38 @@ public class MetricsAction implements IObjectActionDelegate {
 						SystemObject system = ASTReader.getSystemObject();
 						ATFD atfd = new ATFD(system);
 						try {
-							writeXLSFile(atfd.resultSet());
+							writeXLSFile(atfd.resultSet(), "atfd");
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+
+						NOA noa = new NOA(system);
+						try {
+							writeXLSFile(noa.resultSet(), "noa");
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						NOAM noam = new NOAM(system);
+						try {
+							writeXLSFile(noam.resultSet(), "noam");
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						NOM nom = new NOM(system);
+						try {
+							writeXLSFile(nom.resultSet(), "nom");
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						WMC wmc = new WMC(system);
+						try {
+							writeXLSFile(wmc.resultSet(), "wmc");
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						WOC woc = new WOC(system);
+						try {
+							writeXLSFile(woc.resultSet(), "woc");
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
@@ -151,9 +187,11 @@ public class MetricsAction implements IObjectActionDelegate {
 		this.part = targetPart;
 	}
 
-	public void writeXLSFile(Map<String, Integer> data) throws IOException {
+	public void writeXLSFile(Map<String, Double> data, String fileName)
+			throws IOException {
 
-		String excelFileName = "D:/Temp/Test.xls";// name of excel file
+		String excelFileName = "D:/Temp/" + fileName + ".xls";// name of excel
+																// file
 
 		String sheetName = "Sheet1";// name of sheet
 
@@ -173,8 +211,7 @@ public class MetricsAction implements IObjectActionDelegate {
 		for (String key : keyset) {
 
 			Row row1 = sheet.createRow(rownum++);
-
-			Integer metricValue = data.get(key);
+			Double metricValue = data.get(key);
 			Cell className = row1.createCell(0);
 			className.setCellValue(key);
 			int cellnum = 1;

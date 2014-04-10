@@ -42,7 +42,6 @@ public class WOC {
 
 		}
 		int nbrOfNonAccesorMethod = nom - (getterCount + setterCount);
-		System.out.println("nbrOfNonAccesorMethod" + nbrOfNonAccesorMethod);
 		double wocNbr = 0;
 		if (nom != 0) {
 			wocNbr = nbrOfNonAccesorMethod / nom;
@@ -50,12 +49,7 @@ public class WOC {
 		return wocNbr;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		for (String key : wocMap.keySet()) {
-			sb.append(key).append("\t").append(wocMap.get(key)).append("\n");
-		}
-		return sb.toString();
+	public Map<String, Double> resultSet() {
+		return wocMap;
 	}
 }

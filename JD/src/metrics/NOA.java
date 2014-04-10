@@ -14,36 +14,31 @@ import ast.SystemObject;
 
 public class NOA {
 
-	private Map<String, Integer> classesMap;
+	private Map<String, Double> classesMap;
 
 	public NOA(SystemObject system) {
-		classesMap = new HashMap<String, Integer>();
-		
+		classesMap = new HashMap<String, Double>();
+
 		Set<ClassObject> classes = system.getClassObjects();
-		
-		for(ClassObject classObject : classes) {
-			int attributes = computeAttributes(classObject);
-			if(attributes != -1) {
+
+		for (ClassObject classObject : classes) {
+			double attributes = computeAttributes(classObject);
+			if (attributes != -1) {
 				classesMap.put(classObject.getName(), attributes);
 			}
 		}
-		
+
 	}
-	
-	private int computeAttributes(ClassObject classObject) {
-		
+
+	private double computeAttributes(ClassObject classObject) {
+
 		List<FieldObject> attributes = classObject.getFieldList();
 		return (attributes.size());
-		
-	}
-	
 
-	@Override
-	public String toString() {
+	}
+
+	public Map<String, Double> resultSet() {
 		StringBuilder sb = new StringBuilder();
-		for(String key : classesMap.keySet()) {
-			sb.append(key).append("\t").append(classesMap.get(key)).append("\n");
-		}
-		return sb.toString();
+		return classesMap;
 	}
 }

@@ -16,22 +16,20 @@ import ast.SystemObject;
 import ast.TypeObject;
 
 public class ATFD {
-	private int atfdcounter;
-	private Map<String, Integer> atfdMap;
+	private Map<String, Double> atfdMap;
 
 	public ATFD(SystemObject system) {
-		atfdcounter = 0;
-		atfdMap = new HashMap<String, Integer>();
+		atfdMap = new HashMap<String, Double>();
 		Set<ClassObject> classes = system.getClassObjects();
 		for (ClassObject classObject : classes) {
-			int aftdNbr = computeAtfd(classObject, classes);
+			double aftdNbr = computeAtfd(classObject, classes);
 			if (aftdNbr != -1) {
 				atfdMap.put(classObject.getName(), aftdNbr);
 			}
 		}
 	}
 
-	private int computeAtfd(ClassObject classObject, Set<ClassObject> classes) {
+	private double computeAtfd(ClassObject classObject, Set<ClassObject> classes) {
 		List<MethodObject> methods = classObject.getMethodList();
 		Set<TypeObject> classesAccessed = new HashSet<TypeObject>();
 		for (int i = 0; i < methods.size(); i++) {
@@ -54,13 +52,13 @@ public class ATFD {
 			}
 		}
 
-		int i = classesAccessed.size();
+		double i = classesAccessed.size();
 		classesAccessed.clear();
 
 		return i;
 	}
 
-	public Map<String, Integer> resultSet() {
+	public Map<String, Double> resultSet() {
 		StringBuilder sb = new StringBuilder();
 		return atfdMap;
 	}
