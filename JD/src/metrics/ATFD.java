@@ -31,22 +31,20 @@ public class ATFD {
 
 	private double computeAtfd(ClassObject classObject, Set<ClassObject> classes) {
 		List<MethodObject> methods = classObject.getMethodList();
-		Set<TypeObject> classesAccessed = new HashSet<TypeObject>();
+		Set<String> classesAccessed = new HashSet<String>();
 		for (int i = 0; i < methods.size(); i++) {
 
 			MethodObject mI = methods.get(i);
 			List<FieldInstructionObject> attributesI = mI
 					.getFieldInstructions();
 
-			for (FieldInstructionObject attributesII : attributesI) {
-				TypeObject tt = attributesII.getType();
-			}
+			
 
 			for (FieldInstructionObject combinationI : attributesI) {
 				for (ClassObject class1 : classes) {
-					TypeObject tt = combinationI.getType();
-					if (class1.getName().equalsIgnoreCase(tt.getClassType()))
-						classesAccessed.add(combinationI.getType());
+					String tt = combinationI.getOwnerClass();
+					if (!(classObject.getName().equals(class1.getName()))&&(class1.getName().equals(tt)))
+						classesAccessed.add(tt);
 				}
 
 			}
