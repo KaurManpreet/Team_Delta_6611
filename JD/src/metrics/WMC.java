@@ -31,7 +31,7 @@ public class WMC {
 	private double computeComplexity(ClassObject classObject) {
 		List<MethodObject> methods = classObject.getMethodList();
 		double complexity = 0;
-		for (int i = 0; i < methods.size() - 1; i++) {
+		for (int i = 0; i < methods.size(); i++) {
 			MethodObject methodObject = methods.get(i);
 			int count = 0;
 			if (methodObject.getMethodBody() != null) {

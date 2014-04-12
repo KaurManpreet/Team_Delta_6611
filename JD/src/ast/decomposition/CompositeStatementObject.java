@@ -32,11 +32,12 @@ import org.eclipse.jdt.core.dom.Statement;
  */
 
 public class CompositeStatementObject extends AbstractStatement {
-	
+
 	private List<AbstractStatement> statementList;
 	private List<AbstractExpression> expressionList;
 
-	public CompositeStatementObject(Statement statement, StatementType type, AbstractMethodFragment parent) {
+	public CompositeStatementObject(Statement statement, StatementType type,
+			AbstractMethodFragment parent) {
 		super(statement, type, parent);
 		this.statementList = new ArrayList<AbstractStatement>();
 		this.expressionList = new ArrayList<AbstractExpression>();
@@ -44,7 +45,7 @@ public class CompositeStatementObject extends AbstractStatement {
 
 	public void addStatement(AbstractStatement statement) {
 		statementList.add(statement);
-		//statement.setParent(this);
+		// statement.setParent(this);
 	}
 
 	public List<AbstractStatement> getStatements() {
@@ -53,7 +54,7 @@ public class CompositeStatementObject extends AbstractStatement {
 
 	public void addExpression(AbstractExpression expression) {
 		expressionList.add(expression);
-		//expression.setParent(this);
+		// expression.setParent(this);
 	}
 
 	public List<AbstractExpression> getExpressions() {
@@ -62,7 +63,7 @@ public class CompositeStatementObject extends AbstractStatement {
 
 	public List<FieldInstructionObject> getFieldInstructionsInExpressions() {
 		List<FieldInstructionObject> fieldInstructions = new ArrayList<FieldInstructionObject>();
-		for(AbstractExpression expression : expressionList) {
+		for (AbstractExpression expression : expressionList) {
 			fieldInstructions.addAll(expression.getFieldInstructions());
 		}
 		return fieldInstructions;
@@ -70,31 +71,34 @@ public class CompositeStatementObject extends AbstractStatement {
 
 	public List<SuperFieldInstructionObject> getSuperFieldInstructionsInExpressions() {
 		List<SuperFieldInstructionObject> superFieldInstructions = new ArrayList<SuperFieldInstructionObject>();
-		for(AbstractExpression expression : expressionList) {
-			superFieldInstructions.addAll(expression.getSuperFieldInstructions());
+		for (AbstractExpression expression : expressionList) {
+			superFieldInstructions.addAll(expression
+					.getSuperFieldInstructions());
 		}
 		return superFieldInstructions;
 	}
 
 	public List<LocalVariableDeclarationObject> getLocalVariableDeclarationsInExpressions() {
 		List<LocalVariableDeclarationObject> localVariableDeclarations = new ArrayList<LocalVariableDeclarationObject>();
-		for(AbstractExpression expression : expressionList) {
-			localVariableDeclarations.addAll(expression.getLocalVariableDeclarations());
+		for (AbstractExpression expression : expressionList) {
+			localVariableDeclarations.addAll(expression
+					.getLocalVariableDeclarations());
 		}
 		return localVariableDeclarations;
 	}
 
 	public List<LocalVariableInstructionObject> getLocalVariableInstructionsInExpressions() {
 		List<LocalVariableInstructionObject> localVariableInstructions = new ArrayList<LocalVariableInstructionObject>();
-		for(AbstractExpression expression : expressionList) {
-			localVariableInstructions.addAll(expression.getLocalVariableInstructions());
+		for (AbstractExpression expression : expressionList) {
+			localVariableInstructions.addAll(expression
+					.getLocalVariableInstructions());
 		}
 		return localVariableInstructions;
 	}
 
 	public List<MethodInvocationObject> getMethodInvocationsInExpressions() {
 		List<MethodInvocationObject> methodInvocations = new ArrayList<MethodInvocationObject>();
-		for(AbstractExpression expression : expressionList) {
+		for (AbstractExpression expression : expressionList) {
 			methodInvocations.addAll(expression.getMethodInvocations());
 		}
 		return methodInvocations;
@@ -102,15 +106,16 @@ public class CompositeStatementObject extends AbstractStatement {
 
 	public List<SuperMethodInvocationObject> getSuperMethodInvocationsInExpressions() {
 		List<SuperMethodInvocationObject> superMethodInvocations = new ArrayList<SuperMethodInvocationObject>();
-		for(AbstractExpression expression : expressionList) {
-			superMethodInvocations.addAll(expression.getSuperMethodInvocations());
+		for (AbstractExpression expression : expressionList) {
+			superMethodInvocations.addAll(expression
+					.getSuperMethodInvocations());
 		}
 		return superMethodInvocations;
 	}
 
 	public List<CreationObject> getCreationsInExpressions() {
 		List<CreationObject> creations = new ArrayList<CreationObject>();
-		for(AbstractExpression expression : expressionList) {
+		for (AbstractExpression expression : expressionList) {
 			creations.addAll(expression.getCreations());
 		}
 		return creations;
@@ -118,7 +123,7 @@ public class CompositeStatementObject extends AbstractStatement {
 
 	public List<LiteralObject> getLiteralsInExpressions() {
 		List<LiteralObject> literals = new ArrayList<LiteralObject>();
-		for(AbstractExpression expression : expressionList) {
+		for (AbstractExpression expression : expressionList) {
 			literals.addAll(expression.getLiterals());
 		}
 		return literals;
@@ -126,24 +131,27 @@ public class CompositeStatementObject extends AbstractStatement {
 
 	public Set<MethodInvocationObject> getInvokedStaticMethodsInExpressions() {
 		Set<MethodInvocationObject> staticMethodInvocations = new LinkedHashSet<MethodInvocationObject>();
-		for(AbstractExpression expression : expressionList) {
-			staticMethodInvocations.addAll(expression.getInvokedStaticMethods());
+		for (AbstractExpression expression : expressionList) {
+			staticMethodInvocations
+					.addAll(expression.getInvokedStaticMethods());
 		}
 		return staticMethodInvocations;
 	}
 
 	public Set<PlainVariable> getUsedFieldsThroughThisReferenceInExpressions() {
 		Set<PlainVariable> usedFieldsThroughThisReference = new LinkedHashSet<PlainVariable>();
-		for(AbstractExpression expression : expressionList) {
-			usedFieldsThroughThisReference.addAll(expression.getUsedFieldsThroughThisReference());
+		for (AbstractExpression expression : expressionList) {
+			usedFieldsThroughThisReference.addAll(expression
+					.getUsedFieldsThroughThisReference());
 		}
 		return usedFieldsThroughThisReference;
 	}
 
 	public Set<MethodInvocationObject> getInvokedMethodsThroughThisReferenceInExpressions() {
 		Set<MethodInvocationObject> invokedMethodsThroughThisReference = new LinkedHashSet<MethodInvocationObject>();
-		for(AbstractExpression expression : expressionList) {
-			invokedMethodsThroughThisReference.addAll(expression.getInvokedMethodsThroughThisReference());
+		for (AbstractExpression expression : expressionList) {
+			invokedMethodsThroughThisReference.addAll(expression
+					.getInvokedMethodsThroughThisReference());
 		}
 		return invokedMethodsThroughThisReference;
 	}
@@ -151,7 +159,7 @@ public class CompositeStatementObject extends AbstractStatement {
 	public List<String> stringRepresentation() {
 		List<String> stringRepresentation = new ArrayList<String>();
 		stringRepresentation.add(this.toString());
-		for(AbstractStatement statement : statementList) {
+		for (AbstractStatement statement : statementList) {
 			stringRepresentation.addAll(statement.stringRepresentation());
 		}
 		return stringRepresentation;
@@ -159,66 +167,69 @@ public class CompositeStatementObject extends AbstractStatement {
 
 	public List<CompositeStatementObject> getIfStatements() {
 		List<CompositeStatementObject> ifStatements = new ArrayList<CompositeStatementObject>();
-		if(this.getType().equals(StatementType.IF))
+		if (this.getType().equals(StatementType.IF))
 			ifStatements.add(this);
-		for(AbstractStatement statement : statementList) {
-			if(statement instanceof CompositeStatementObject) {
-				CompositeStatementObject composite = (CompositeStatementObject)statement;
+		for (AbstractStatement statement : statementList) {
+			if (statement instanceof CompositeStatementObject) {
+				CompositeStatementObject composite = (CompositeStatementObject) statement;
 				ifStatements.addAll(composite.getIfStatements());
 			}
 		}
 		return ifStatements;
 	}
-	
-	
+
 	public List<CompositeStatementObject> getForStatements() {
 		List<CompositeStatementObject> forStatements = new ArrayList<CompositeStatementObject>();
-		if(this.getType().equals(StatementType.FOR))
+		if (this.getType().equals(StatementType.FOR))
 			forStatements.add(this);
-		for(AbstractStatement statement : statementList) {
-			if(statement instanceof CompositeStatementObject) {
-				CompositeStatementObject composite = (CompositeStatementObject)statement;
+		for (AbstractStatement statement : statementList) {
+			if (statement instanceof CompositeStatementObject) {
+				CompositeStatementObject composite = (CompositeStatementObject) statement;
 				forStatements.addAll(composite.getForStatements());
 			}
 		}
 		return forStatements;
 	}
-	
-	
+
 	public List<CompositeStatementObject> getWhileStatements() {
 		List<CompositeStatementObject> whileStatements = new ArrayList<CompositeStatementObject>();
-		if(this.getType().equals(StatementType.WHILE))
+		if (this.getType().equals(StatementType.WHILE))
 			whileStatements.add(this);
-		for(AbstractStatement statement : statementList) {
-			if(statement instanceof CompositeStatementObject) {
-				CompositeStatementObject composite = (CompositeStatementObject)statement;
+		for (AbstractStatement statement : statementList) {
+			if (statement instanceof CompositeStatementObject) {
+				CompositeStatementObject composite = (CompositeStatementObject) statement;
 				whileStatements.addAll(composite.getWhileStatements());
 			}
 		}
 		return whileStatements;
 	}
-	
+
 	public List<CompositeStatementObject> getDoStatements() {
 		List<CompositeStatementObject> doStatements = new ArrayList<CompositeStatementObject>();
-		if(this.getType().equals(StatementType.DO))
+		if (this.getType().equals(StatementType.DO))
 			doStatements.add(this);
-		for(AbstractStatement statement : statementList) {
-			if(statement instanceof CompositeStatementObject) {
-				CompositeStatementObject composite = (CompositeStatementObject)statement;
+		for (AbstractStatement statement : statementList) {
+			if (statement instanceof CompositeStatementObject) {
+				CompositeStatementObject composite = (CompositeStatementObject) statement;
 				doStatements.addAll(composite.getDoStatements());
 			}
 		}
 		return doStatements;
 	}
-	
-	
+
 	public List<CompositeStatementObject> getSwitchStatements() {
 		List<CompositeStatementObject> switchStatements = new ArrayList<CompositeStatementObject>();
-		if(this.getType().equals(StatementType.SWITCH))
-			switchStatements.add(this);
-		for(AbstractStatement statement : statementList) {
-			if(statement instanceof CompositeStatementObject) {
-				CompositeStatementObject composite = (CompositeStatementObject)statement;
+		if (this.getType().equals(StatementType.SWITCH)) {
+			List<AbstractStatement> abstractStmtList = this.statementList;
+			for (AbstractStatement abstractStmt : abstractStmtList) {
+				if (abstractStmt.getType().equals(StatementType.SWITCH_CASE)) {
+					switchStatements.add(this);
+				}
+			}
+		}
+		for (AbstractStatement statement : statementList) {
+			if (statement instanceof CompositeStatementObject) {
+				CompositeStatementObject composite = (CompositeStatementObject) statement;
 				switchStatements.addAll(composite.getSwitchStatements());
 			}
 		}
@@ -227,11 +238,11 @@ public class CompositeStatementObject extends AbstractStatement {
 
 	public List<TryStatementObject> getTryStatements() {
 		List<TryStatementObject> tryStatements = new ArrayList<TryStatementObject>();
-		if(this.getType().equals(StatementType.TRY))
-			tryStatements.add((TryStatementObject)this);
-		for(AbstractStatement statement : statementList) {
-			if(statement instanceof CompositeStatementObject) {
-				CompositeStatementObject composite = (CompositeStatementObject)statement;
+		if (this.getType().equals(StatementType.TRY))
+			tryStatements.add((TryStatementObject) this);
+		for (AbstractStatement statement : statementList) {
+			if (statement instanceof CompositeStatementObject) {
+				CompositeStatementObject composite = (CompositeStatementObject) statement;
 				tryStatements.addAll(composite.getTryStatements());
 			}
 		}
@@ -241,12 +252,12 @@ public class CompositeStatementObject extends AbstractStatement {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getType().toString());
-		if(expressionList.size() > 0) {
+		if (expressionList.size() > 0) {
 			sb.append("(");
-			for(int i=0; i<expressionList.size()-1; i++) {
+			for (int i = 0; i < expressionList.size() - 1; i++) {
 				sb.append(expressionList.get(i).toString()).append("; ");
 			}
-			sb.append(expressionList.get(expressionList.size()-1).toString());
+			sb.append(expressionList.get(expressionList.size() - 1).toString());
 			sb.append(")");
 		}
 		sb.append("\n");
